@@ -1,0 +1,28 @@
+{
+    "name": "ryannielson/meta",
+    "description": "",
+    "keywords": ["laravel", "meta", "view"],
+    "homepage": "https://github.com/RyanNielson/meta",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ryan Nielson",
+            "email": "ryan.nielson@gmail.com",
+            "homepage": "http://nielson.io"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "4.1.*",
+        "illuminate/view": "4.1.*"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "2.0.*@dev"
+    },
+    "autoload": {
+        "psr-0": {
+            "RyanNielson\\Meta\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
