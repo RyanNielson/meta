@@ -26,7 +26,7 @@ class Meta {
      */
     public function clear()
     {
-        $this->attributes = [];
+        $this->attributes = array();
 
         return $this->attributes;
     }
