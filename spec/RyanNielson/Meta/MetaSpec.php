@@ -47,4 +47,10 @@ class MetaSpec extends ObjectBehavior
         $this->set(array('title' => 'Test Title', 'description' => 'Test Description', 'keywords' => 'keyword3, keyword4'));
         $this->display()->shouldBe("<meta name=\"title\" content=\"Test Title\"/>\n<meta name=\"description\" content=\"Test Description\"/>\n<meta name=\"keywords\" content=\"keyword3, keyword4\"/>");
     }
+
+    function it_displays_nested_meta_tags_correctly()
+    {
+        $this->set(array('title' => 'Test Title', 'og' => array('title' => 'OG Test Title', 'url' => 'http://example.com')));
+        $this->display()->shouldBe("<meta name=\"title\" content=\"Test Title\"/>\n<meta name=\"og:title\" content=\"OG Test Title\"/>\n<meta name=\"og:url\" content=\"http://example.com\"/>");
+    }
 }
