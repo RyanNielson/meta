@@ -42,21 +42,23 @@ class Meta {
 
     /**
      * Display the meta tags with the set attributes
+     * @param string $defaults The default meta attributes
      * @return string The meta tags
      */
-    public function display()
+    public function display($defaults = array())
     {
+        $metaAttributes = array_replace_recursive($defaults, $this->attributes);
         $results = array();
 
-        $title = $this->getAttribute('title');
+        $title = $this->removeFromArray($metaAttributes, 'title');
         if ($title !== null)
             $results[] = '<meta name="title" content="' . $title . '"/>';
 
-        $description = $this->getAttribute('description');
+        $description = $this->removeFromArray($metaAttributes, 'description');
         if ($description !== null)
             $results[] = '<meta name="description" content="' . $description .'"/>';
 
-        $keywords = $this->prepareKeywords();
+        $keywords = $this->prepareKeywords($this->removeFromArray($metaAttributes, 'keywords'));
         if ($keywords !== null)
             $results[] = '<meta name="keywords" content="' . $keywords .'"/>';
 
@@ -73,9 +75,8 @@ class Meta {
      * Prepares keywords and converts the array to a comma separated string if required.
      * @return string Comma separated keywords.
      */
-    private function prepareKeywords()
+    private function prepareKeywords($keywords)
     {
-        $keywords = $this->getAttribute('keywords');
         if ($keywords === null)
             return null;
 
@@ -89,14 +90,14 @@ class Meta {
      * Removes an item from the array and returns its value.
      *
      * @param array $arr The input array
-     * @param $key The key pointing to the desired value
+     * @param string $key The key pointing to the desired value
      * @return string The value mapped to $key or null if none
      */
-    private function removeFromAttributes($key)
+    private function removeFromArray(&$array, $key)
     {
-        if (array_key_exists($key, $this->attributes)) {
-            $val = $this->attributes[$key];
-            unset($this->attributes[$key]);
+        if (array_key_exists($key, $array)) {
+            $val = $array[$key];
+            unset($array[$key]);
             return $val;
         }
 
