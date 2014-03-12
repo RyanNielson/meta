@@ -50,22 +50,36 @@ class Meta {
         $metaAttributes = array_replace_recursive($defaults, $this->attributes);
         $results = array();
 
+        // Handle title meta tag generation.
         $title = $this->removeFromArray($metaAttributes, 'title');
         if ($title !== null)
             $results[] = '<meta name="title" content="' . $title . '"/>';
 
+        // Handle description meta tag generation.
         $description = $this->removeFromArray($metaAttributes, 'description');
         if ($description !== null)
             $results[] = '<meta name="description" content="' . $description .'"/>';
 
+        // Handle keywords meta tag generation.
         $keywords = $this->prepareKeywords($this->removeFromArray($metaAttributes, 'keywords'));
         if ($keywords !== null)
             $results[] = '<meta name="keywords" content="' . $keywords .'"/>';
 
-        foreach($this->attributes as $key => $value) {
+        // Handle properties whose values are associative arrays.
+        foreach($metaAttributes as $key => $value) {
             if ($this->isAssociativeArray($value)) {
                 $results = array_merge($results, $this->processNestedAttributes($key, $value));
+                $this->removeFromArray($metaAttributes, $key);
             }
+        }
+
+        // Handle other custom properties.
+        foreach($metaAttributes as $property => $content) {
+            foreach((array)$content as $con) {
+                $results[] =  '<meta name="' . $property . '" content="' . $con .'"/>';
+            }
+
+            $this->removeFromArray($metaAttributes, $property);
         }
 
         return implode("\n", $results);
