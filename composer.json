@@ -1,6 +1,6 @@
 {
     "name": "ryannielson/meta",
-    "description": "",
+    "description": "A Laravel 4 package that makes it easy to add meta tags to your views.",
     "keywords": ["laravel", "meta", "view"],
     "homepage": "https://github.com/RyanNielson/meta",
     "license": "MIT",
