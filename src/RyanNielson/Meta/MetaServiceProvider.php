@@ -2,7 +2,7 @@
 
 use Illuminate\Support\ServiceProvider;
 
-class LaravelMetaServiceProvider extends ServiceProvider {
+class MetaServiceProvider extends ServiceProvider {
 
     /**
      * Indicates if loading of the provider is deferred.

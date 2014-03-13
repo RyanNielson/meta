@@ -53,17 +53,17 @@ class Meta {
         // Handle title meta tag generation.
         $title = $this->removeFromArray($metaAttributes, 'title');
         if ($title !== null)
-            $results[] = '<meta name="title" content="' . $title . '"/>';
+            $results[] = $this->metaTag('title', $title);
 
         // Handle description meta tag generation.
         $description = $this->removeFromArray($metaAttributes, 'description');
         if ($description !== null)
-            $results[] = '<meta name="description" content="' . $description .'"/>';
+            $results[] = $this->metaTag('description', $description);
 
         // Handle keywords meta tag generation.
         $keywords = $this->prepareKeywords($this->removeFromArray($metaAttributes, 'keywords'));
         if ($keywords !== null)
-            $results[] = '<meta name="keywords" content="' . $keywords .'"/>';
+            $results[] = $this->metaTag('keywords', $keywords);
 
         // Handle properties whose values are associative arrays.
         foreach($metaAttributes as $key => $value) {
@@ -76,7 +76,7 @@ class Meta {
         // Handle other custom properties.
         foreach($metaAttributes as $property => $content) {
             foreach((array)$content as $con) {
-                $results[] =  '<meta name="' . $property . '" content="' . $con .'"/>';
+                $results[] =  $this->metaTag($property, $con);
             }
 
             $this->removeFromArray($metaAttributes, $property);
@@ -151,7 +151,7 @@ class Meta {
                 if ($this->isAssociativeArray($con))
                     $results = array_merge($results, $this->processNestedAttributes($property, $con));
                 else
-                     $results[] =  '<meta name="' . $property . '" content="' . $con .'"/>';
+                     $results[] =  $this->metaTag($property, $con);
             }
         }
 
@@ -166,6 +166,17 @@ class Meta {
     private function isAssociativeArray($value)
     {
         return is_array($value) && (bool)count(array_filter(array_keys($value), 'is_string'));
+    }
+
+    /**
+     * Returns a meta tag with the given name and content.
+     * @param  string $name The name of the meta tag
+     * @param  string $content  The meta tag content
+     * @return string           The constructed meta tag
+     */
+    private function metaTag($name, $content)
+    {
+        return "<meta name=\"$name\" content=\"$content\"/>";
     }
 
 }
