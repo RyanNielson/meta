@@ -21,6 +21,37 @@ class Meta {
     }
 
     /**
+     * Display the meta tags with the set attributes
+     * @param string $defaults The default meta attributes
+     * @return string The meta tags
+     */
+    public function display($defaults = array())
+    {
+        $metaAttributes = array_replace_recursive($defaults, $this->attributes);
+        $results = array();
+
+         // Handle other custom properties.
+        foreach($metaAttributes as $name => $content) {
+            $content = array_pull($metaAttributes, $name);
+
+            if ($name === 'keywords') {
+                $keywords = $this->prepareKeywords($content);
+                $results[] = $this->metaTag('keywords', $keywords);
+            }
+            elseif ($this->isAssociativeArray($content)) {
+                $results = array_merge($results, $this->processNestedAttributes($name, $content));
+            }
+            else {
+                foreach((array)$content as $con) {
+                    $results[] =  $this->metaTag($name, $con);
+                }
+            }
+        }
+
+        return implode("\n", $results);
+    }
+
+    /**
      * Clears the meta attributes array.
      * @return array
      */
@@ -41,51 +72,6 @@ class Meta {
     }
 
     /**
-     * Display the meta tags with the set attributes
-     * @param string $defaults The default meta attributes
-     * @return string The meta tags
-     */
-    public function display($defaults = array())
-    {
-        $metaAttributes = array_replace_recursive($defaults, $this->attributes);
-        $results = array();
-
-        // Handle title meta tag generation.
-        $title = $this->removeFromArray($metaAttributes, 'title');
-        if ($title !== null)
-            $results[] = $this->metaTag('title', $title);
-
-        // Handle description meta tag generation.
-        $description = $this->removeFromArray($metaAttributes, 'description');
-        if ($description !== null)
-            $results[] = $this->metaTag('description', $description);
-
-        // Handle keywords meta tag generation.
-        $keywords = $this->prepareKeywords($this->removeFromArray($metaAttributes, 'keywords'));
-        if ($keywords !== null)
-            $results[] = $this->metaTag('keywords', $keywords);
-
-        // Handle properties whose values are associative arrays.
-        foreach($metaAttributes as $key => $value) {
-            if ($this->isAssociativeArray($value)) {
-                $results = array_merge($results, $this->processNestedAttributes($key, $value));
-                $this->removeFromArray($metaAttributes, $key);
-            }
-        }
-
-        // Handle other custom properties.
-        foreach($metaAttributes as $property => $content) {
-            foreach((array)$content as $con) {
-                $results[] =  $this->metaTag($property, $con);
-            }
-
-            $this->removeFromArray($metaAttributes, $property);
-        }
-
-        return implode("\n", $results);
-    }
-
-    /**
      * Prepares keywords and converts the array to a comma separated string if required.
      * @return string Comma separated keywords.
      */
@@ -98,37 +84,6 @@ class Meta {
             $keywords = implode(', ', $keywords);
 
         return strtolower(strip_tags($keywords));
-    }
-
-    /**
-     * Removes an item from the array and returns its value.
-     *
-     * @param array $arr The input array
-     * @param string $key The key pointing to the desired value
-     * @return string The value mapped to $key or null if none
-     */
-    private function removeFromArray(&$array, $key)
-    {
-        if (array_key_exists($key, $array)) {
-            $val = $array[$key];
-            unset($array[$key]);
-            return $val;
-        }
-
-        return null;
-    }
-
-    /**
-     * Returns an attribute using the key, and null if it hasn't been set.
-     * @param  string $key
-     * @return string The value mapped to $key, or null if none
-     */
-    private function getAttribute($key)
-    {
-        if (array_key_exists($key, $this->attributes))
-            return $this->attributes[$key];
-
-        return null;
     }
 
     /**
