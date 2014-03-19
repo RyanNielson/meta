@@ -1,8 +1,10 @@
 #Meta
 
-A Laravel 4 package that makes it easy to add meta tags to your views.
+A package that makes it easy to add meta tags to your views with easy Laravel integration.
 
 ## Installation
+
+#### General
 
 Run the following Composer command in your terminal, or simply add `'ryannielson/meta': '1.0.*'` to your composer.json file:
 
@@ -12,7 +14,9 @@ Then update Composer from the terminal:
 
     composer update
 
-### Laravel Specific Installation
+#### Laravel Specific
+
+This package also includes Laravel facades and service providers to make integration with Laravel easy.
 
 Once complete, you now have to add the the service provider to the providers array in `app/config/app.php`: 
 
@@ -22,12 +26,13 @@ Finally, add the following entry entry to the aliases array in `app/config/app.p
 
     'Meta' => 'RyanNielson\Meta\Facades\Meta'
 
+
 That's it!
 
 
 ## Usage
 
-### General
+#### General
 
 To set meta tag values, you will use the `set(array())` method. Any set values will persist through the entire request of the application:
 
@@ -55,7 +60,7 @@ To display your meta tags using the set values, you will use the `Meta::display(
     <meta name="og:description" content="OG Description"/>
 
 
-### Laravel Specific
+#### Laravel Specific
 
 To set meta tag values, you will use the `Meta::set(array())` function. Any set values will persist through the entire request of the application:
 
