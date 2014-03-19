@@ -1,6 +1,8 @@
 #Meta
 
-A package that makes it easy to add meta tags to your views with easy Laravel integration.
+A package that makes it easy to add meta tags to your views.
+
+This package will work in any PHP application, and Facades and Service Providers are provided to make it easy to integrate with Laravel 4.
 
 ## Installation
 
