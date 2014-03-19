@@ -12,6 +12,8 @@ Then update Composer from the terminal:
 
     composer update
 
+### Laravel Specific Installation
+
 Once complete, you now have to add the the service provider to the providers array in `app/config/app.php`: 
 
     'RyanNielson\Meta\MetaServiceProvider'
@@ -24,6 +26,36 @@ That's it!
 
 
 ## Usage
+
+### General
+
+To set meta tag values, you will use the `set(array())` method. Any set values will persist through the entire request of the application:
+
+    $meta = new \RyanNielson\Meta\Meta;
+
+    // Example #1 - Basic setting of values
+    $meta->set(array('title' => 'Page Title', 'description' => 'Page Description', 'keywords' => array('great', 'site')));
+
+    // Example #2 - Setting nested values. This will render tags with names like og:title and og:description
+    $meta->set(array('title' => 'Page Title', 'og' => array('title' => 'OG Title', 'description' => 'OG Description')));
+
+
+To display your meta tags using the set values, you will use the `Meta::display(array())` function. This will normally be done in your layout or in other views:
+
+    $meta->display();
+
+    // Displaying Example #1 from above
+    <meta name="title" content="Page Title"/>
+    <meta name="description" content="Page Description"/>
+    <meta name="keywords" content="great, site"/>
+
+    // Displaying Example #2 from above
+    <meta name="title" content="Page Title"/>
+    <meta name="og:title" content="OG Title"/>
+    <meta name="og:description" content="OG Description"/>
+
+
+### Laravel Specific
 
 To set meta tag values, you will use the `Meta::set(array())` function. Any set values will persist through the entire request of the application:
 
