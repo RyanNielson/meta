@@ -36,7 +36,7 @@ That's it!
 
 #### General
 
-To set meta tag values, you will use the `set(array())` method. Any set values will persist through the entire request of the application:
+To set meta tag values, you will use the `set(array())` method on the Meta instance. Just pass this Meta object around to persist the set values. 
 
     $meta = new \RyanNielson\Meta\Meta;
 
@@ -47,7 +47,7 @@ To set meta tag values, you will use the `set(array())` method. Any set values w
     $meta->set(array('title' => 'Page Title', 'og' => array('title' => 'OG Title', 'description' => 'OG Description')));
 
 
-To display your meta tags using the set values, you will use the `Meta::display(array())` function. This will normally be done in your layout or in other views:
+To display your meta tags using the set values, you will use the `display(array())` function on your Meta object.:
 
     $meta->display();
 
@@ -88,4 +88,4 @@ To display your meta tags using the set values, you will use the `Meta::display(
     <meta name="og:description" content="OG Description"/>
 
 
-The display function also accepts an array of default values. These will be used when displaying your meta tags if a value is not set already using `Meta::set()`.
+The display function also accepts an array of default values. These will be used when displaying your meta tags if a value is not set already using `set()`.
