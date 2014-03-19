@@ -32,7 +32,8 @@ class Meta {
 
          // Handle other custom properties.
         foreach($metaAttributes as $name => $content) {
-            $content = array_pull($metaAttributes, $name);
+            // $content = array_pull($metaAttributes, $name);
+            $content = $this->removeFromArray($metaAttributes, $name);
 
             if ($name === 'keywords') {
                 $keywords = $this->prepareKeywords($content);
@@ -134,4 +135,21 @@ class Meta {
         return "<meta name=\"$name\" content=\"$content\"/>";
     }
 
+    /**
+     * Removes an item from the array and returns its value.
+     *
+     * @param array $arr The input array
+     * @param string $key The key pointing to the desired value
+     * @return string The value mapped to $key or null if none
+     */
+    private function removeFromArray(&$array, $key)
+    {
+        if (array_key_exists($key, $array)) {
+            $val = $array[$key];
+            unset($array[$key]);
+            return $val;
+        }
+
+       return null;
+   }
 }
