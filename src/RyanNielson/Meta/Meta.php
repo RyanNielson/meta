@@ -46,7 +46,7 @@ class Meta {
             }
         }
 
-        if ($displayTitle) {
+        if ($displayTitle && array_key_exists('title', $metaAttributes)) {
             $results[] = $this->titleTag($metaAttributes['title']);
         }
 

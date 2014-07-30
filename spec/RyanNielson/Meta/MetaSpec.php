@@ -76,6 +76,6 @@ class MetaSpec extends ObjectBehavior
     function it_displays_meta_tags_and_title_tag()
     {
         $this->set(array('title' => 'Test Title', 'description' => 'Test Description'));
-        $this->display(array(), true)->shouldBe("<meta name=\"description\" content=\"Test Description\"/>\n<title>Test Title</title>");
+        $this->display(array(), true)->shouldBe("<meta name=\"title\" content=\"Test Title\"/>\n<meta name=\"description\" content=\"Test Description\"/>\n<title>Test Title</title>");
     }
 }
