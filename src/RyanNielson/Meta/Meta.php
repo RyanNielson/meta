@@ -25,16 +25,13 @@ class Meta {
      * @param string $defaults The default meta attributes
      * @return string The meta tags
      */
-    public function display($defaults = array())
+    public function display($defaults = array(), $displayTitle = false)
     {
         $metaAttributes = array_replace_recursive($defaults, $this->attributes);
         $results = array();
 
          // Handle other custom properties.
         foreach($metaAttributes as $name => $content) {
-            // $content = array_pull($metaAttributes, $name);
-            $content = $this->removeFromArray($metaAttributes, $name);
-
             if ($name === 'keywords') {
                 $keywords = $this->prepareKeywords($content);
                 $results[] = $this->metaTag('keywords', $keywords);
@@ -47,6 +44,10 @@ class Meta {
                     $results[] =  $this->metaTag($name, $con);
                 }
             }
+        }
+
+        if ($displayTitle) {
+            $results[] = $this->titleTag($metaAttributes['title']);
         }
 
         return implode("\n", $results);
@@ -126,6 +127,7 @@ class Meta {
 
     /**
      * Returns a meta tag with the given name and content.
+     *
      * @param  string $name The name of the meta tag
      * @param  string $content  The meta tag content
      * @return string           The constructed meta tag
@@ -133,6 +135,17 @@ class Meta {
     private function metaTag($name, $content)
     {
         return "<meta name=\"$name\" content=\"$content\"/>";
+    }
+
+    /**
+     * Renders a title tag with the given content.
+     *
+     * @param  string $content The title tag content
+     * @return string The value mapped to $key or null if none
+     */
+    private function titleTag($content)
+    {
+        return "<title>$content</title>";
     }
 
     /**
@@ -151,5 +164,5 @@ class Meta {
         }
 
        return null;
-   }
+    }
 }
