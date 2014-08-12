@@ -8,9 +8,9 @@ This package will work in any PHP application, and Facades and Service Providers
 
 #### General
 
-Run the following Composer command in your terminal, or simply add `'ryannielson/meta': '1.0.*'` to your composer.json file:
+Run the following Composer command in your terminal, or simply add `'ryannielson/meta': '1.1.*'` to your composer.json file:
 
-    composer require ryannielson/meta:'1.0.*'
+    composer require ryannielson/meta:'1.1.*'
 
 Then update Composer from the terminal:
 
