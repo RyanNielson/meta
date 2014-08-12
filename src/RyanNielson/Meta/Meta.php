@@ -134,7 +134,10 @@ class Meta {
      */
     private function metaTag($name, $content)
     {
-        return "<meta name=\"$name\" content=\"$content\"/>";
+        if(substr($name, 0, 3) == 'og:')
+            return "<meta property=\"$name\" content=\"$content\"/>";
+        else
+            return "<meta name=\"$name\" content=\"$content\"/>";
     }
 
     /**
