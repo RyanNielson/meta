@@ -48,10 +48,16 @@ class MetaSpec extends ObjectBehavior
         $this->display()->shouldBe("<meta name=\"title\" content=\"Test Title\"/>\n<meta name=\"description\" content=\"Test Description\"/>\n<meta name=\"keywords\" content=\"keyword3, keyword4\"/>");
     }
 
+    function it_displays_og_tags_as_properties_instead_of_meta_names()
+    {
+        $this->set(array('og' => array('title' => 'OG Test Title', 'url' => 'http://example.com')));
+        $this->display()->shouldBe("<meta property=\"og:title\" content=\"OG Test Title\"/>\n<meta property=\"og:url\" content=\"http://example.com\"/>");
+    }
+
     function it_displays_nested_meta_tags_correctly()
     {
         $this->set(array('title' => 'Test Title', 'og' => array('title' => 'OG Test Title', 'url' => 'http://example.com')));
-        $this->display()->shouldBe("<meta name=\"title\" content=\"Test Title\"/>\n<meta name=\"og:title\" content=\"OG Test Title\"/>\n<meta name=\"og:url\" content=\"http://example.com\"/>");
+        $this->display()->shouldBe("<meta name=\"title\" content=\"Test Title\"/>\n<meta property=\"og:title\" content=\"OG Test Title\"/>\n<meta property=\"og:url\" content=\"http://example.com\"/>");
     }
 
     function it_displays_custom_meta_tags_correctly()
