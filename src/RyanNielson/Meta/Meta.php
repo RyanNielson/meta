@@ -134,7 +134,7 @@ class Meta {
      */
     private function metaTag($name, $content)
     {
-        if(substr($name, 0, 3) == 'og:')
+        if(substr($name, 0, 3) == 'og:' || substr($name, 0, 3) == 'fb:')
             return "<meta property=\"$name\" content=\"$content\"/>";
         else
             return "<meta name=\"$name\" content=\"$content\"/>";
