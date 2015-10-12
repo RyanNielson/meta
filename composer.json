@@ -1,8 +1,8 @@
 {
-    "name": "ryannielson/meta",
+    "name": "austerussian/meta",
     "description": "A package that makes it easy to add meta tags to your views. Includes easy Laravel integration.",
     "keywords": ["meta", "view", "laravel"],
-    "homepage": "https://github.com/RyanNielson/meta",
+    "homepage": "https://github.com/austerussian/meta",
     "license": "MIT",
     "authors": [
         {
