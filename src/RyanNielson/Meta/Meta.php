@@ -1,7 +1,11 @@
 <?php namespace RyanNielson\Meta;
 
 class Meta {
-
+    /**
+     * The attributes of the meta tag
+     * @var array
+     */
+    private $metaPropertyes = array();
     /**
      * The current stored meta attributes to be rendered at a later stage.
      * @var array
@@ -21,6 +25,13 @@ class Meta {
     }
 
     /**
+     * Sets the meta propertyes.
+     * @param $metaPropertyes
+     */
+    public function setProperty($metaPropertyes){
+        $this->metaPropertyes = array_replace_recursive($this->metaPropertyes, $metaPropertyes);
+    }
+    /**
      * Display the meta tags with the set attributes
      * @param string $defaults The default meta attributes
      * @return string The meta tags
@@ -29,7 +40,6 @@ class Meta {
     {
         $metaAttributes = array_replace_recursive($defaults, $this->attributes);
         $results = array();
-
          // Handle other custom properties.
         foreach($metaAttributes as $name => $content) {
             if ($name === 'keywords') {
@@ -136,10 +146,30 @@ class Meta {
     {
         if(substr($name, 0, 3) == 'og:' || substr($name, 0, 3) == 'fb:')
             return "<meta property=\"$name\" content=\"$content\"/>";
-        else
-            return "<meta name=\"$name\" content=\"$content\"/>";
+        else {
+            $itemprop = '';
+            if($name == 'description' || $name == 'autor')
+                $itemprop = 'itemprop = "'.$name.'""';
+            return "<meta $itemprop name=\"$name\" content=\"$content\" ".$this->getProp($name)."/>";
+        }
     }
 
+    /**
+     * Returns string meta propertiyes
+     * @param $name
+     * @return string
+     */
+    private function getProp($name){
+        if(!empty($this->metaPropertyes[$name]) && is_array($this->metaPropertyes[$name])) {
+            $string = '';
+            foreach ($this->metaPropertyes[$name] as $property) {
+                $string = $property['name'] . ' = "' . $property['val'] . '" ';
+            }
+            return $string;
+        }
+        else
+            return '';
+    }
     /**
      * Renders a title tag with the given content.
      *
@@ -148,7 +178,7 @@ class Meta {
      */
     private function titleTag($content)
     {
-        return "<title>$content</title>";
+        return "<title itemprop=\"name\">".$content."</title>";
     }
 
     /**
