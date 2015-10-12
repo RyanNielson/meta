@@ -10,7 +10,7 @@ This package will work in any PHP application, and Facades and Service Providers
 
 Run the following Composer command in your terminal, or simply add `'ryannielson/meta': '1.1.*'` to your composer.json file:
 
-    composer require ryannielson/meta:'1.1.*'
+    composer require austerussian/meta
 
 Then update Composer from the terminal:
 
