@@ -20,7 +20,7 @@ Then update Composer from the terminal:
 
 This package also includes Laravel facades and service providers to make integration with Laravel easy.
 
-Once complete, you now have to add the the service provider to the providers array in `app/config/app.php`: 
+Once complete, you now have to add the service provider to the providers array in `app/config/app.php`: 
 
     'RyanNielson\Meta\MetaServiceProvider'
     
